@@ -13,6 +13,7 @@ body {
     line-height: 1.6;
     padding: 20px;
     animation: fadeIn 1s ease-in-out;
+    overflow-x: hidden;
 }
 
 header {
@@ -23,17 +24,22 @@ header {
     backdrop-filter: blur(10px);
     animation: slideDown 1s ease-in-out;
     border-radius: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 h1 {
     font-size: 3em;
     color: #fff;
     transition: color 0.3s ease, transform 0.3s ease;
+    animation: neonGlow 1.5s infinite alternate;
+    cursor: pointer;
 }
 
 h1:hover {
     color: #ffeb3b;
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(-2deg);
 }
 
 h2 {
@@ -42,28 +48,44 @@ h2 {
     padding-bottom: 5px;
     transition: border-color 0.3s ease;
     text-align: center;
+    animation: pulseGlow 2s infinite alternate;
 }
 
 h2:hover {
     border-color: #ff5722;
+    transform: rotate(1deg);
 }
 
 section {
     max-width: 900px;
     margin: 40px auto;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 1s ease-in-out forwards;
+    animation: fadeInUp 1s ease-in-out forwards, floatEffect 5s infinite alternate;
     backdrop-filter: blur(10px);
     transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: floatingGlow 6s infinite linear;
 }
 
 section:hover {
-    transform: scale(1.02);
+    transform: scale(1.05) rotate(1deg);
 }
 
 ul {
@@ -74,11 +96,14 @@ ul {
 ul li {
     padding: 8px 0;
     transition: transform 0.3s ease;
+    animation: fadeInUp 2s ease-in-out forwards;
+    cursor: pointer;
 }
 
 ul li:hover {
-    transform: translateX(10px);
+    transform: translateX(10px) rotate(-3deg);
     color: #ffeb3b;
+    text-shadow: 0 0 10px #ffeb3b;
 }
 
 footer {
@@ -103,7 +128,7 @@ footer {
     transform: translateY(0);
 }
 
-/* Animations */
+/* Keyframe Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -117,4 +142,25 @@ footer {
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatEffect {
+    from { transform: translateY(-10px); }
+    to { transform: translateY(10px); }
+}
+
+@keyframes neonGlow {
+    from { text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b, 0 0 30px #ff5722; }
+    to { text-shadow: 0 0 20px #ffeb3b, 0 0 30px #ff5722, 0 0 40px #ff5722; }
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 10px #ffeb3b; }
+    to { box-shadow: 0 0 20px #ff5722; }
+}
+
+@keyframes floatingGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(50px, 50px) scale(1.2); }
+    100% { transform: translate(0, 0) scale(1); }
 }
